@@ -16,6 +16,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: stop the server
       run: docker-compose down
+    - name: remove the existing image
+      run: docker rmi -f authapis
     - name: pull the new code
       run: git pull
     - name: start the server
