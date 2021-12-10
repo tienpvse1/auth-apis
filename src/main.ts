@@ -12,7 +12,7 @@ async function bootstrap() {
     .setDescription(
       'In order to call api, you must be able to use jwt and CICD workflows',
     )
-    .setVersion('1.0')
+    .setVersion('1.1')
     .addBearerAuth({
       name: 'Authorization',
       type: 'http',
