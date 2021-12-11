@@ -50,7 +50,7 @@ export class BaseRepository<Doc extends BaseSchema> {
         code: HttpStatus.NOT_FOUND,
         message: 'not found',
       });
-      return;
+      return; 
     }
     return data;
   }
