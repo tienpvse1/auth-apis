@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { JwtGuard } from './auth/guard/jwt.guard';
 import { RoleGuard } from './auth/guard/role.guard';
+import { ProductsModule } from './products/products.module';
 import configDatabase from './config/config.database';
 
 @Module({
@@ -19,6 +20,7 @@ import configDatabase from './config/config.database';
     MongooseModule.forRoot(process.env.ME_CONFIG_MONGODB_URL),
     AccountModule,
     AuthModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [
