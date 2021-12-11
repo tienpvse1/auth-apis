@@ -42,9 +42,11 @@ export class BaseRepository<Doc extends BaseSchema> {
     return ok<Doc[]>(result);
   }
   async findOneForInternal(filter: FilterQuery<Doc>) {
-    const data = await this.model.findOne(filter);
-    if (data == undefined || data == null)
+    try {
+      const data = await this.model.findOne(filter);
+      return data;
+    } catch {
       throw new NotFoundException('item not found');
-    return data;
+    }
   }
 }
