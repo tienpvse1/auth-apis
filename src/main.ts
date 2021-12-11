@@ -20,7 +20,11 @@ async function bootstrap() {
     .build();
   app.enableCors({
     credentials: true,
-    origin: 'http://14.225.254.71:3000',
+    origin: [
+      'http://14.225.254.71:3000',
+      'http://localhost:3000',
+      'http://localhost:3001',
+    ],
   });
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
