@@ -8,7 +8,7 @@ export class ResponseObject<T> {
   }
 }
 
-export class Response {
+export class StaticResponse {
   static created<T>(data: T) {
     return new ResponseObject<T>({
       code: StatusCodes.CREATED,

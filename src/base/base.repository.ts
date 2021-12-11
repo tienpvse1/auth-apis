@@ -1,12 +1,14 @@
 import {
+  HttpStatus,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
-import { Response } from 'src/shared/shared.response';
+import { StaticResponse } from 'src/shared/shared.response';
 import { BaseSchema } from './base.schema';
 
-const { created, ok } = Response;
+const { created, ok } = StaticResponse;
 export class BaseRepository<Doc extends BaseSchema> {
   constructor(protected readonly model: Model<Doc>) {}
 
@@ -41,12 +43,15 @@ export class BaseRepository<Doc extends BaseSchema> {
     const result = await this.model.find();
     return ok<Doc[]>(result);
   }
-  async findOneForInternal(filter: FilterQuery<Doc>) {
-    try {
-      const data = await this.model.findOne(filter);
-      return data;
-    } catch {
-      throw new NotFoundException('item not found');
+  async findOneForInternal(filter: FilterQuery<Doc>, response: Response) {
+    const data = await this.model.findOne(filter);
+    if (data == null || data == undefined) {
+      response.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'not found',
+      });
+      return;
     }
+    return data;
   }
 }

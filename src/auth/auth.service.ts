@@ -11,9 +11,13 @@ export class AuthService {
   constructor(private repository: AccountRepository, private jwt: JwtService) {}
 
   async login(loginReq: LoginReq, response: Response) {
-    const account = await this.repository.findOneForInternal({
-      email: loginReq.email,
-    });
+    const account = await this.repository.findOneForInternal(
+      {
+        email: loginReq.email,
+      },
+      response,
+    );
+    if (account == null || account == undefined) return;
     const checkPassword = compareSync(loginReq.password, account.password);
     if (!checkPassword) {
       response.status(StatusCodes.UNAUTHORIZED).json({
