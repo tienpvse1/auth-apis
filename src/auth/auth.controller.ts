@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { Public } from 'src/decorators/public.decorator';
@@ -14,5 +14,11 @@ export class AuthController {
   @Public()
   async login(@Body() loginReq: LoginReq, @Res() response: Response) {
     this.authService.login(loginReq, response);
+  }
+
+  @Get('something')
+  @Public()
+  async getSomething() {
+    return { message: 'this is something' };
   }
 }

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AccountModule } from './account/account.module';
 import { AppController } from './app.controller';
@@ -8,8 +8,11 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { JwtGuard } from './auth/guard/jwt.guard';
 import { RoleGuard } from './auth/guard/role.guard';
-import { ProductsModule } from './products/products.module';
 import configDatabase from './config/config.database';
+import { ErrorModule } from './error/error.module';
+import { HttpExceptionFilter } from './exceptions/filter.exception';
+import { TransformInterceptor } from './interceptors/response.interceptor';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -21,6 +24,7 @@ import configDatabase from './config/config.database';
     AccountModule,
     AuthModule,
     ProductsModule,
+    ErrorModule,
   ],
   controllers: [AppController],
   providers: [
@@ -32,6 +36,14 @@ import configDatabase from './config/config.database';
     {
       provide: APP_GUARD,
       useClass: RoleGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
     },
   ],
 })
