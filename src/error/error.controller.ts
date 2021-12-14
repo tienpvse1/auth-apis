@@ -7,7 +7,6 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Public } from 'src/decorators/public.decorator';
 import { ErrorService } from './error.service';
 
 @Controller('error')

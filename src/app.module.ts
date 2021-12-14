@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AccountModule } from './account/account.module';
 import { AppController } from './app.controller';
@@ -11,7 +11,6 @@ import { RoleGuard } from './auth/guard/role.guard';
 import configDatabase from './config/config.database';
 import { ErrorModule } from './error/error.module';
 import { HttpExceptionFilter } from './exceptions/filter.exception';
-import { TransformInterceptor } from './interceptors/response.interceptor';
 import { ProductsModule } from './products/products.module';
 
 @Module({
@@ -36,10 +35,6 @@ import { ProductsModule } from './products/products.module';
     {
       provide: APP_GUARD,
       useClass: RoleGuard,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: TransformInterceptor,
     },
     {
       provide: APP_FILTER,
