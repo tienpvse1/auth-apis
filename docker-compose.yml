@@ -26,9 +26,9 @@ services:
       NODE_ENV: production
       ME_CONFIG_MONGODB_URL: mongodb://root:123456@mongo:27017/
     ports:
-      - 8080:8080
+      - 8085:8085
     expose:
-      - 8080
+      - 8085
     links:
       - mongo
     depends_on:
